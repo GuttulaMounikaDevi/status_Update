@@ -1,0 +1,64 @@
+select * from students
+
+select * from education_detail
+
+select CURRENT_TIMESTAMP
+
+select GETDATE()
+
+select DATEADD(day,1,'2016/12/23')
+SELECT DATEADD(year, 1, joining_date) from Students 
+
+select DATEDIFF(day,joining_date,joining_date) from Students
+select DATEDIFF(month,'2016/12/25','2017/12/25')
+select DATEDIFF(year,'2016/12/25','2017/12/25')
+
+select DATEFROMPARTS(2016,2,21)
+
+select DATEFROMPARTS(2016,Stud_roll_no,12) from Students where stud_Roll_NO=1 or stud_Roll_NO<11
+
+select DATENAME(month,joining_date)  from Students
+select DATENAME(WEEKDAY,joining_date)  from Students
+
+select DATEPART(WEEKday,joining_date) from students
+
+select Day(joining_date) from students
+
+select GETDATE() 
+
+select GETUTCDATE() -----
+
+select ISDATE(joining_date) from Students
+select ISDATE(stud_Email) from Students
+
+select month(joining_date) from Students
+
+select SYSDATETIME()
+
+select year(joining_date) from Students
+
+select cast(12.8 as int)
+
+select coalesce(null,null,stud_name,null,stud_email) from Students
+
+select CONVERT(int,12.90)
+
+select CURRENT_USER
+
+select iif(subject2< subject3,'yes','no') from Education_detail
+
+select isnull(null,val) from Education_detail
+
+select isnumeric(stud_email) from Students
+select isnumeric(subject1) from Education_detail
+
+select nullif(stud_roll_no,stud_phn_number) from students
+select nullif(stud_roll_no,stud_roll_no) from students
+
+select SESSION_USER
+
+select SESSIONPROPERTY('stud_roll_no') from students
+
+select SYSTEM_USER
+
+select USER_NAME()
