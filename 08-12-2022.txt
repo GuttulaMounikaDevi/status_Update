@@ -1,0 +1,31 @@
+select * from Students
+select * from Education_detail
+--Creating Store Procedure
+create procedure Students_sp
+as 
+select * from students 
+go
+
+exec students_sp
+
+create procedure Stud_sp
+as 
+select * from students where stud_roll_no>5
+go
+exec Stud_sp
+create procedure Stdnt_sp
+as 
+select * from students where stud_roll_no>5
+go
+
+exec Stdnt_sp
+--Store Procedure with single parameters
+CREATE PROCEDURE SelectAllCustomers @stud_name nvarchar(30)
+AS
+SELECT * FROM Students WHERE stud_Name = @stud_name
+GO
+
+exec SelectAllCustomers @stud_name='Mounika' 
+-- dropping store Procedure
+drop procedure stud_sp
+ 
