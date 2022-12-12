@@ -1,0 +1,74 @@
+-----------------SCALAR FUNCTION (return single value)------------------------------
+--creating a function
+
+create function Scalar_pass_fail(@num int)
+returns char 
+as
+begin
+ declare @pass_Fail char
+ if (@num >280)
+   set @pass_Fail='A'
+ else if (@num <280 and @num>250)
+   set @pass_Fail='B'
+ else if (@num <250 and @num>200)
+   set @pass_Fail='C'
+ else 
+   set @pass_Fail='F'
+ return @pass_Fail
+end
+select * , dbo.Scalar_pass_fail(total) as grade from Education_detail
+
+select * , dbo.Scalar_pass_fail(total) as grade from Education_detail where stud_Roll_NO>=10
+
+select Education_detail.stud_Roll_NO ,Students.stud_Name,Education_detail.subject1,Education_detail.subject2,
+Education_detail.subject3,Education_detail.total,Education_detail.average, dbo.paas_Fail(total) as grade
+from Education_detail 
+inner join Students on Students.stud_Roll_NO=Education_detail.stud_Roll_NO
+
+--altering a function 
+
+Alter function Scalar_pass_fail(@num int)
+returns char 
+as
+begin
+ declare @pass_Fail char
+ if (@num >280)
+   set @pass_Fail='A'
+ else if (@num <280 and @num>250)
+   set @pass_Fail='B'
+ else if (@num <250 and @num>200)
+   set @pass_Fail='C'
+ else if(@num<200 and @num>180)
+   set @pass_Fail='D'
+ else
+  set @pass_Fail='F'
+ return @pass_Fail
+end
+
+--droping a function
+
+drop function Scalar_pass_fail
+
+-----------------INLINE TABLE VALUED FUNCTION (returns table)----------------------
+--creating a function
+
+create function Inline_pass_fail(@num int)
+returns table
+as
+return (select * from Education_detail where total=@num)
+select * from  Inline_pass_fail(200)
+
+select Students.stud_Name,Education_detail.stud_Roll_NO,Education_detail.subject1,Education_detail.subject2,
+Education_detail.subject3,Education_detail.total from Education_detail
+join Students on Students.stud_Roll_NO=Education_detail.stud_Roll_NO
+
+--altering
+
+alter function Inline_pass_fail(@num int)
+returns table
+as
+return (select * from Education_detail where total>=@num)
+
+--dropping
+
+drop function Inline_pass_fail
