@@ -1,0 +1,75 @@
+select * from Students
+select * from Education_detail
+
+-----Views-----
+create view Samples_1 as
+select subject1,subject2,subject3,total,Education_detail.stud_Roll_NO from Education_detail
+where total>( select avg(total) from Education_detail)
+
+----inserting elements into view
+insert into samples_1  values(80,80,80,270,15);
+---updating views----
+update  samples_1 
+set total=282 from Education_detail
+
+update  samples_1 
+set total=282 from Education_detail where education_detail.subject2=98;
+
+---deleting a element in a view--
+delete Samples_1 where total=282
+
+select * from Samples_1
+drop view Samples_1
+-------altering views----------
+alter view samples_1 as
+select subject1,subject2,subject3,total from Education_detail
+where total>( select avg(total) from Education_detail)
+
+select * from samples_1
+-----droping a view--------
+drop view samples_1
+
+--------creating views using joins-----
+create view Samples as
+select Students.stud_Name,Education_detail.stud_Roll_NO subject1,subject2,subject3,total from Education_detail
+inner join students on Education_detail.stud_Roll_NO=Students.stud_Roll_NO
+where total>=200
+
+-----creating view without using joins
+create view samples_example as 
+select Students.stud_Name,Education_detail.stud_Roll_NO subject1,subject2,subject3,total from Education_detail,Students
+where total>=200
+
+-----IS NULL & IS NOT NULL
+select subject1,subject2,subject3,total,val from Education_detail
+where val is null 
+
+select subject1,subject2,subject3,total,val from Education_detail
+where val is null or subject1 is null
+
+select subject1,subject2,subject3,total,val from Education_detail
+where val is null and subject1 is null
+
+select subject1,subject2,subject3,total,val from Education_detail
+where val is not null and subject1 is null
+
+select subject1,subject2,subject3,total,val from Education_detail
+where val is not null order by(total)
+
+----nullif------
+select subject2,subject2,nullif (subject3,val) from Education_detail
+select subject2,subject2,nullif (subject3,val) from Education_detail  order by (subject3)
+---joins(nullif)
+select subject2,subject2,nullif (students.stud_roll_no,val) from Education_detail
+inner join students on Education_detail.stud_Roll_NO=Students.stud_Roll_NO order by (subject3)
+select subject2,subject2,nullif (students.stud_roll_no,val) from Education_detail
+right join students on Education_detail.stud_Roll_NO=Students.stud_Roll_NO order by (subject3)
+
+----ISNULL function
+select isnull(val,average) from Education_detail
+select isnull(val,subject2) from Education_detail 
+select isnull(val,subject2) from Education_detail order by subject1
+
+-----COALESCE---
+select subject1,subject2,val,subject3,coalesce(subject1,subject2,val,subject3) as coalesces from Education_detail
+select subject1,subject2,subject3,val,coalesce(subject1,subject2,val,subject3) as coalesces from Education_detail
