@@ -1,0 +1,112 @@
+--EXISTS,UNION,UNION ALL,ANY,ALL,INTERSECT,EXCEP
+----UNION ALL 
+
+select stud_roll_no from Students
+union all
+select Subject1 from Education_detail as education
+
+select stud_roll_no from Students where stud_Roll_NO>10
+union all
+select Subject1 from Education_detail as education where subject1>=80 order by stud_Roll_NO 
+
+select subject1,subject2 from Education_detail where subject1>=80
+union all
+select stud_roll_no,stud_Roll_NO from Students as education where stud_roll_no>10 order by subject1 
+
+select subject1,sum(total) from Education_detail
+select subject1,sum(total) from Education_detail group by total
+
+select count(stud_roll_no) from Education_detail group by total having total=282
+select * from Education_detail
+
+select * from Students
+select * from Education_detail
+
+----any
+SELECT stud_roll_no,stud_Email,stud_Name FROM Students WHERE stud_Roll_NO = ANY (SELECT stud_Roll_NO FROM Education_detail WHERE subject1 >80)
+select stud_roll_no,subject1,subject2,subject3 from Education_detail where stud_Roll_NO=any (select stud_Roll_NO from Education_detail where subject3 > 90)
+select * from Students
+select * from Education_detail 
+
+---all
+select stud_roll_no,subject1,subject2,subject3 from Education_detail where stud_Roll_NO=all (select stud_Roll_NO from Education_detail where subject3 > 90)
+select stud_roll_no,subject1,subject2,subject3 from Education_detail where stud_Roll_NO=any (select stud_Roll_NO from Education_detail where stud_Roll_NO = stud_Roll_NO)
+
+--intersect
+select e.stud_roll_no,stud_Name,total from Students s left join Education_detail e on s.stud_Roll_NO=e.stud_Roll_NO 
+intersect 
+select s.stud_roll_no,stud_Name,total from Education_detail e right join Students s on e.stud_Roll_NO=s.stud_Roll_NO
+select * from Students
+select * from Education_detail
+
+--except
+select e.stud_roll_no,stud_Name,total from Students s left join Education_detail e on s.stud_Roll_NO=e.stud_Roll_NO 
+except 
+select s.stud_roll_no,stud_Name,total from Education_detail e right join Students s on e.stud_Roll_NO=s.stud_Roll_NO
+
+---cast
+select cast(joining_date as date) from Students
+select cast(joining_date as varchar) from students
+select cast(joining_date as varchar(3)) from students
+select cast(Stud_Phn_Number as date) from Students
+select cast(joining_date as int) from students
+
+
+---convert
+select convert(date,joining_date,3) from Students
+select convert(date,joining_date) from Students 
+select convert(varchar,joining_date,3) from Students
+
+
+
+--------------------------------------------------------------------------
+
+select * from Bonus
+select * from title
+select * from Worker
+
+-- Write an SQL query to fetch “FIRST_NAME” from Worker table using the alias name as <WORKER_NAME>.
+select first_name as Worker_Name from Worker 
+
+--Write an SQL query to fetch “FIRST_NAME” from Worker table in upper case.
+select Upper(first_name) from Worker 
+
+---Write an SQL query to fetch unique values of DEPARTMENT from Worker table.
+select distinct(department)from worker
+
+--Write an SQL query to print the first three characters of  FIRST_NAME from Worker table.
+select cast(first_name as char(3)) from worker
+select substring(first_name,1,3) from Worker
+
+--Write an SQL query to find the position of the alphabet (‘a’) in the first name column ‘Amitabh’ from Worker table.
+--select CHARINDEX(first_name,'a') from Worker where FIRST_NAME='Amitabh' 
+
+--Write an SQL query to print the FIRST_NAME from Worker table after removing white spaces from the right side.
+select RTRIM(first_name) from worker 
+
+--Write an SQL query to print the DEPARTMENT from Worker table after removing white spaces from the left side.
+select LTRIM(department) from Worker
+
+--Write an SQL query that fetches the unique values of DEPARTMENT from Worker table and prints its length.
+select distinct(DEPARTMENT), len(department) from worker 
+
+--Write an SQL query to print the FIRST_NAME from Worker table after replacing ‘a’ with ‘A’.
+select REPLACE(first_name,'a','A') from Worker
+
+--Write an SQL query to print the FIRST_NAME and LAST_NAME from Worker table into a single column COMPLETE_NAME. A space char should separate them.
+select CONCAT(first_name,'',last_name) as Complete_Name from worker
+
+--Write an SQL query to print all Worker details from the Worker table order by FIRST_NAME Ascending.
+select * from worker order by FIRST_NAME
+
+--Write an SQL query to print all Worker details from the Worker table order by FIRST_NAME Ascending and DEPARTMENT Descending.
+select * from worker order by FIRST_NAME asc,DEPARTMENT desc
+
+--Write an SQL query to print details for Workers with the first name as “Vipul” and “Satish” from Worker table.
+select * from worker where FIRST_NAME in ('vipul','satish') 
+
+--Write an SQL query to print details of workers excluding first names, “Vipul” and “Satish” from Worker table.
+select * from worker where FIRST_NAME not in ('vipul','satish') 
+
+--Write an SQL query to print details of Workers with DEPARTMENT name as “Admin”.
+select * from Worker where DEPARTMENT='Admin'
