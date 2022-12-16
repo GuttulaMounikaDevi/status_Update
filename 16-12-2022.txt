@@ -1,0 +1,62 @@
+--Write an SQL query to print details of the Workers whose FIRST_NAME contains ‘a’.
+select * from Worker where FIRST_NAME like '%a%'
+
+--Write an SQL query to print details of the Workers whose FIRST_NAME ends with ‘a’
+select * from Worker where FIRST_NAME like '%a'
+
+--Write an SQL query to print details of the Workers whose FIRST_NAME ends with ‘h’ and contains six alphabets.
+select * from Worker where FIRST_NAME like '______h'
+
+--Write an SQL query to print details of the Workers whose SALARY lies between 100000 and 500000.
+select * from worker where SALARY between 100000 and 500000
+
+--Write an SQL query to print details of the Workers who have joined in Feb’2014.
+select * from worker where  year(JOINING_DATE)=2014 and month(JOINING_DATE)=2
+
+--Write an SQL query to fetch the count of employees working in the department ‘Admin’.
+select count(worker_id) from worker  where DEPARTMENT='admin'
+select count( * ) from worker  where DEPARTMENT='admin'
+
+--Write an SQL query to fetch worker names with salaries >= 50000 and <= 100000.
+select concat(first_name,'',Last_name) as worker_name,SALARY from Worker
+where WORKER_ID in( select worker_id from worker where SALARY between 50000 and 100000)
+--using function
+create function names_with_salary(@num int,@num1 int)
+returns table
+as
+return (select concat(first_name,'',Last_name) as worker_name,SALARY from Worker
+where WORKER_ID in( select worker_id from worker where SALARY between @num and @num1))
+select * from  names_with_salary(50000,100000)
+
+--Write an SQL query to fetch the no. of workers for each department in the descending order.
+select count(*) as no_of_worker,DEPARTMENT from worker group by DEPARTMENT order by no_of_worker desc 
+
+--Q-24. Write an SQL query to print details of the Workers who are also Managers.
+select W.First_name,t.Worker_title from Title t 
+inner join worker w on t.WORKER_REF_ID=w.WORKER_ID where WORKER_TITLE='Manager'
+
+--Write an SQL query to fetch duplicate records having matching data in some fields of a table.
+select worker_title,Affected_from,count(*) from Title group by WORKER_TITLE,AFFECTED_FROM having count(*)>1
+
+--Write an SQL query to show only odd rows from a table.
+select * from worker where (WORKER_ID%2)=1
+
+--Write an SQL query to show only even rows from a table.
+select * from worker where (WORKER_ID%2)=0
+
+--Write an SQL query to clone a new table from another table.
+
+
+
+--Write an SQL query to fetch intersecting records of two tables.
+
+
+
+--Write an SQL query to show records from one table that another table does not have.
+
+
+
+--Write an SQL query to show the current date and time.
+select getdate()
+
+--Write an SQL query to show the top n (say 10) records of a table.
