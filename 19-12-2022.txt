@@ -1,0 +1,133 @@
+bulk insert Students 
+from 'D:\Education\SQL\Students.txt.txt'
+with
+(
+rowterminator='\n',
+fieldterminator=','
+)
+
+create table BInsert(
+name varchar(20),
+phn_no bigint,
+e_mail varchar(50)
+)
+
+bulk insert BInsert 
+from 'D:\Education\SQL\BInsert.txt'
+with
+(
+rowterminator='\n',
+fieldterminator=','
+)
+select * from BInsert
+update BInsert set e_mail='sunil@gmail.com' where e_mail='suni@gmail.com'
+
+create table BCP(
+name varchar(20),
+phn_no bigint,
+e_mail varchar(50)
+)
+select * from BCP
+
+Create TABLE Employee  
+(  
+Emp_IId Int identity(1,1),  
+First_Name Nvarchar(MAX) Not NUll,  
+Last_Name Nvarchar(MAX) Not Null,  
+Salary Int Not Null check(Salary>20000),  
+City Nvarchar(Max) Not Null  
+) 
+insert into Employee values('Pankaj','Choudhary',25000,'Alwar') 
+insert into Employee values( 'Rahul','Prajapat',23000,'Alwar')  
+insert into Employee values( 'Sandeep','Jangid',27000,'Alwar')
+insert into Employee values( 'Sanjeev','Baldia',24000,'Alwar')
+insert into Employee values( 'Neeraj','Saini',22000,'Alwar')
+insert into Employee values( 'Narendra','Sharma',23000,'Alwar')
+insert into Employee values( 'Divyanshu','Gupta',25000,'Alwar') 
+select * from Employee
+
+update Employee set salary=19000 where Emp_IId=5
+if @@ERROR =547
+print 'A Check constaint violation Occurred.';
+
+update Employee set salary=200001 where Emp_IId=5
+if @@ERROR =547
+print 'A Check constaint violation Occurred.';
+---- Because in table we have salary >20000 so the error occur in 1st query
+
+BEGIN TRY  
+Update Employee set Salary=19000 Where Emp_IID=5  
+END TRY  
+BEGIN CATCH  
+SELECT ERROR_NUMBER() AS ErrorNumber;  
+END CATCH;  
+GO 
+
+BEGIN TRY  
+Update Employee set Salary=19000 Where Emp_IID=5  
+END TRY  
+BEGIN CATCH  
+SELECT ERROR_NUMBER() AS ErrorNumber;  
+print @@ERROR  
+END CATCH;  
+GO 
+
+BEGIN TRY  
+Update Employee set Salary=19000 Where Emp_IID=5  
+END TRY  
+BEGIN CATCH  
+print @@ERROR  
+SELECT ERROR_NUMBER() AS ErrorNumber;  
+END CATCH;  
+GO  
+
+BEGIN TRY  
+Update Employee set Salary=19000 Where Emp_IID=5  
+END TRY  
+BEGIN CATCH  
+SELECT ERROR_MESSAGE() AS ErrorMsg;  
+END CATCH;  
+GO  
+
+BEGIN TRY  
+SELECT SALARY + First_Name From Employee Where Emp_IID=5  
+END TRY  
+BEGIN CATCH  
+SELECT ERROR_STATE() AS ErrorState , ERROR_MESSAGE() ErrorMsg ;  
+END CATCH;  
+GO 
+
+BEGIN TRY  
+SELECT SALARY + First_Name From Employee Where Emp_IID=5  
+END TRY  
+BEGIN CATCH  
+SELECT ERROR_STATE() AS ErrorLine;  
+END CATCH;  
+GO 
+
+Create Procedure My_Proc  
+AS  
+begin  
+BEGIN TRY  
+SELECT SALARY + First_Name From Employee Where Emp_IID=5  
+END TRY  
+BEGIN CATCH  
+SELECT ERROR_PROCEDURE() AS ProcName;  
+END CATCH;  
+END  
+
+exec My_Proc
+
+BEGIN TRY  
+SELECT SALARY + First_Name From Employee Where Emp_IID=5  
+END TRY  
+BEGIN CATCH  
+SELECT ERROR_SEVERITY() AS ErrorSeverity;  
+END CATCH;
+
+BEGIN TRY  
+SELECT SALARY + First_Name From Employee Where Emp_IID=5  
+END TRY  
+BEGIN CATCH  
+RAISERROR(N'An Error Is Occur',16,3);  
+END CATCH;  
